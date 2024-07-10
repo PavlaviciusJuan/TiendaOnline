@@ -24,28 +24,7 @@ public class CategoriaController {
     public Categoria createCategoria(@RequestBody Categoria categoria) {
         return categoriaService.save(categoria);
     }
-    /*
-    @PutMapping("/{id}")
-    public Categoria updateCategoria(@PathVariable Long id, @RequestBody Categoria categoria) {
-        return categoriaService.update(id, categoria);
-    }
 
-    @DeleteMapping("/{id}")
-    public void deleteCategoria(@PathVariable Long id) {
-        categoriaService.delete(id);
-    }
-
-    @GetMapping("/{id}")
-    public Categoria getCategoria(@PathVariable Long id) {
-        return categoriaService.findById(id);
-    }
-
-    @GetMapping
-    public List<Categoria> getAllCategorias() {
-        return categoriaService.findAll();
-    }
-
-     */
 }
 
 
