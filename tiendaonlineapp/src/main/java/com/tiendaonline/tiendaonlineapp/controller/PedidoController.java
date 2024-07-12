@@ -1,8 +1,10 @@
 package com.tiendaonline.tiendaonlineapp.controller;
 
-import com.tiendaonline.tiendaonlineapp.model.Pedido;
+import com.tiendaonline.tiendaonlineapp.dto.PedidoDTO;
 import com.tiendaonline.tiendaonlineapp.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,23 +23,28 @@ public class PedidoController {
     }
 
     @PostMapping("/")
-    public Pedido createPedido(@RequestBody Pedido pedido) {
-        return pedidoService.save(pedido);
-    }
-
-    @GetMapping("/")
-    public List<Pedido> getAllPedidos() {
-        return pedidoService.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public Pedido getPedido(@PathVariable Long id) {
-        return pedidoService.findById(id);
+    public ResponseEntity<PedidoDTO> createPedido(@RequestBody PedidoDTO pedidoDTO) {
+        PedidoDTO savedPedido = pedidoService.save(pedidoDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedPedido);
     }
 
     @PutMapping("/{id}")
-    public Pedido updatePedido(@PathVariable Long id, @RequestBody Pedido pedido) {
-        return pedidoService.update(id, pedido);
+    public ResponseEntity<PedidoDTO> updatePedido(@PathVariable Long id, @RequestBody PedidoDTO pedidoDTO) {
+        PedidoDTO updatedPedido = pedidoService.update(id, pedidoDTO);
+        return ResponseEntity.ok(updatedPedido);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PedidoDTO> getPedido(@PathVariable Long id) {
+        PedidoDTO pedido = pedidoService.findById(id);
+        return ResponseEntity.ok(pedido);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<PedidoDTO>> getAllPedidos() {
+        List<PedidoDTO> pedidos = pedidoService.findAll();
+        return ResponseEntity.ok(pedidos);
+    }
+
 }
 
