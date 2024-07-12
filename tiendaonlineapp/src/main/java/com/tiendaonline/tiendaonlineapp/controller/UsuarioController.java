@@ -3,6 +3,8 @@ package com.tiendaonline.tiendaonlineapp.controller;
 import com.tiendaonline.tiendaonlineapp.model.Usuario;
 import com.tiendaonline.tiendaonlineapp.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,28 +23,33 @@ public class UsuarioController {
     }
 
     @PostMapping("/")
-    public Usuario createUsuario(@RequestBody Usuario usuario) {
-        return usuarioService.save(usuario);
+    public ResponseEntity<Usuario> createUsuario(@RequestBody Usuario usuario) {
+        Usuario usuarioCreado = usuarioService.save(usuario);
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioCreado);
     }
 
     @PostMapping("/auth/login")
-    public Boolean autenticarRolUsuario(@RequestBody Usuario usuario) {
-        return usuarioService.autenticarUsuario(usuario);
+    public ResponseEntity<Boolean> autenticarRolUsuario(@RequestBody Usuario usuario) {
+        Boolean isAdmin = usuarioService.autenticarUsuario(usuario);
+        return ResponseEntity.ok(isAdmin);
     }
 
     @PutMapping("/{id}")
-    public Usuario updateUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
-        return usuarioService.update(id, usuario);
+    public ResponseEntity<Usuario> updateUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
+        Usuario usuarioCreado = usuarioService.update(id, usuario);
+        return ResponseEntity.ok(usuarioCreado);
     }
 
     @GetMapping("/{id}")
-    public Usuario getUsuario(@PathVariable Long id) {
-        return usuarioService.findById(id);
+    public ResponseEntity<Usuario> getUsuario(@PathVariable Long id) {
+        Usuario usuario = usuarioService.findById(id);
+        return ResponseEntity.ok(usuario);
     }
 
     @GetMapping
-    public List<Usuario> getAllUsuarios() {
-        return usuarioService.findAll();
+    public ResponseEntity<List<Usuario>> getAllUsuarios() {
+        List<Usuario> usuarios = usuarioService.findAll();
+        return ResponseEntity.ok(usuarios);
     }
 }
 
