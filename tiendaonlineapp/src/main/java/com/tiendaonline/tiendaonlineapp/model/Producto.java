@@ -1,6 +1,6 @@
 package com.tiendaonline.tiendaonlineapp.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class Producto {
     private Integer stock;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnore
+
     private Categoria categoria;
 
     @ManyToMany @JoinTable(
